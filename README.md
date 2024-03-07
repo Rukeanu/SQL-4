@@ -2,7 +2,7 @@
 
 ## _Snapshots, virtual tables… What is going on?_
 
-Resume: Today you will see how to use a virtual view and physical snapshot of data
+Resume: Today you will see how to use a virtual view and physical snapshot of data.
 
 ## Contents
 
@@ -37,50 +37,50 @@ Resume: Today you will see how to use a virtual view and physical snapshot of da
 ![D04_02](misc/images/D04_02.png)
 
 Why do we need virtual tables and materialized views in databases? Databases are just tables, aren't they? 
-No, actually not. Databases are similar for object-oriented language. Just recall, you have a lot of abstraction in Java (I mean Java Interfaces). We need abstraction to achieve “Clean Architecture” and change objects with minimal effect on dependencies (sometimes it’s working :-). 
+No, not really. Databases are similar to object-oriented languages. Just remember, you have a lot of abstraction in Java (we mean Java interfaces). We need abstraction to achieve "clean architecture" and change objects with minimal impact on dependencies (sometimes it works :-).
 
-Moreover, there is a specific architectures’ pattern in the Relational Database with the name ANSI/SPARK.
-This pattern splits objects on three levels: 
-- external level
-- conceptual level
-- internal level
+Moreover, there is a specific architecture pattern in the Relational Database called ANSI/SPARK.
+This pattern divides objects into three levels: 
+- external level,
+- conceptual level,
+- internal level.
 
-Therefore we can say that Virtual Tables and Materialized Views are physical interfaces between tables with data and user / application.
-So, what is the difference then between 2 objects? The main difference is in the “freshness of data”. Below , you can see behaviors of these objects in graphical representation.
+Therefore, we can say that Virtual Tables and Materialized Views are physical interfaces between tables with data and user/application.
+So, what is the difference between 2 objects? The main difference is the "freshness" of the data. Below you can see the behavior of these objects in graphical representation.
 
 |  |  |
 | ------ | ------ |
 | View is a continuous object with the same data like in the underlying table(s), that are used to create this view. Other words, if we select data from view, view reroutes our query to underlying objects and then returns results for us. | ![D04_03](misc/images/D04_03.png) |
 | ![D04_04](misc/images/D04_04.png) | Materialized View is a discrete object. Other words, we need to wait when the Materialized View will be refreshed based on an “event trigger” (for example, time schedule). This object always is behind actual data in underlying tables. |
 
-Also, there are “a few” additional differences between View and Materialized View.
-- Virtual Table can work with `INSERT/UPDATE/DELETE` traffic but with some restrictions. 
+There are also "a few" additional differences between View and Materialized View.
+- Virtual Table can work with `INSERT/UPDATE/DELETE` traffic, but with some restrictions. 
 - Virtual Tables can have “Instead Of” Triggers to make a better control of incoming `INSERT/UPDATE/DELETE` traffic.
-- Materialized View is ReadOnly object for `INSERT/UPDATE/DELETE` traffic
-- Materialized Views can have user defined indexes on columns to speed up queries
+- Materialized View is ReadOnly object for `INSERT/UPDATE/DELETE` traffic.
+- Materialized Views can have user defined indexes on columns to speed up queries.
 
 
 ## Chapter II
 ## General Rules
 
-- Use this page as the only reference. Do not listen to any rumors and speculations on how to prepare your solution.
-- Please make sure you are using the latest version of PostgreSQL.
-- That is completely OK if you are using IDE to write a source code (aka SQL script).
-- To be assessed your solution must be in your GIT repository.
-- Your solutions will be evaluated by your piscine mates.
-- You should not leave in your directory any other file than those explicitly specified by the exercise instructions. It is recommended that you modify your `.gitignore` to avoid accidents.
-- Do you have a question? Ask your neighbor on the right. Otherwise, try with your neighbor on the left.
+- Use this page as your only reference. Do not listen to rumors and speculations about how to prepare your solution.
+- Make sure you are using the latest version of PostgreSQL.
+- It is perfectly fine if you use the IDE to write source code (aka SQL script).
+- To be evaluated, your solution must be in your GIT repository.
+- Your solutions will be evaluated by your peers.
+- You should not leave any files in your directory other than those explicitly specified by the exercise instructions. It is recommended that you modify your `.gitignore` to avoid accidents.
+- Got a question? Ask your neighbor to the right. Otherwise, try your neighbor on the left.
 - Your reference manual: mates / Internet / Google. 
-- Read the examples carefully. They may require things that are not otherwise specified in the subject.
+- Read the examples carefully. You may need things not specified in the topic.
 - And may the SQL-Force be with you!
-- Absolutely everything can be presented in SQL! Let’s start and have fun!
+Absolutely anything can be represented in SQL! Let's get started and have fun!
 
 ## Chapter III
 ## Rules of the day
 
-- Please make sure you have an own database and access for it on your PostgreSQL cluster. 
+- Please make sure you have your own database and access for it on your PostgreSQL cluster. 
 - Please download a [script](materials/model.sql) with Database Model here and apply the script to your database (you can use command line with psql or just run it through any IDE, for example DataGrip from JetBrains or pgAdmin from PostgreSQL community). **Our knowledge way is incremental and linear therefore please be aware all changes that you made in Day03 during exercises 07-13 should be on place (its similar like in real world , when we applied a release and need to be consistency with data for new changes).**
-- All tasks contain a list of Allowed and Denied sections with listed database options, database types, SQL constructions etc. Please have a look at the section before you start.
+- All tasks contain a list of Allowed and Denied sections with listed database options, database types, SQL constructions etc. Please have a look at this section before you start.
 - Please take a look at the Logical View of our Database Model. 
 
 ![schema](misc/images/schema.png)
@@ -112,7 +112,7 @@ Also, there are “a few” additional differences between View and Materialized
 - field menu_id - foreign key to menu
 - field order_date - date (for example 2022-01-01) of person order 
 
-Persons' visit and persons' order are different entities and don't contain any correlation between data. For example, a client can be in one restraunt (just looking at menu) and in this time make an order in different one by phone or by mobile application. Or another case,  just be at home and again make a call with order without any visits.
+People's visit and people's order are different entities and don't contain any correlation between data. For example, a customer can be in a restaurant (just looking at the menu) and in that time place an order in another restaurant by phone or mobile application. Or another case, just be at home and again make a call with order without any visits.
 
 ## Chapter IV
 ## Exercise 00 - Let’s create separated views for persons
@@ -124,8 +124,7 @@ Persons' visit and persons' order are different entities and don't contain any c
 | **Allowed**                               |                                                                                                                          |
 | Language                        | ANSI SQL                                                                                              |
 
-Please create 2 Database Views (with similar attributes like the original table) based on simple filtering of gender of persons. Set the corresponding names for the database views: `v_persons_female` and `v_persons_male`.
-
+Please create 2 Database Views (with similar attributes as the original table) based on a simple filtering by gender of persons. Set the corresponding names for the database views: `v_persons_female` and `v_persons_male`.
 
 ## Chapter V
 ## Exercise 01 - From parts to common view
@@ -137,7 +136,7 @@ Please create 2 Database Views (with similar attributes like the original table)
 | **Allowed**                               |                                                                                                                          |
 | Language                        | ANSI SQL                                                                                              |
 
-Please use 2 Database Views from Exercise #00 and write SQL to get female and male person names in one list. Please set the order by person name. The sample of data is presented below.
+Please use 2 Database Views from Exercise #00 and write SQL to get female and male person names in one list. Please specify the order by person name. The sample data is shown below.
 
 | name |
 | ------ |
@@ -147,9 +146,9 @@ Please use 2 Database Views from Exercise #00 and write SQL to get female and ma
 
 
 ## Chapter VI
-## Exercise 02 - “Store” generated dates in one place
+## Exercise 02 - "Store" generated dates in one place
 
-| Exercise 02: “Store” generated dates in one place|                                                                                                                          |
+| Exercise 02: "Store" generated dates in one place|                                                                                                                          |
 |---------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
 | Turn-in directory                     | ex02                                                                                                                     |
 | Files to turn-in                      | `day04_ex02.sql`                                                                                 |
@@ -157,7 +156,7 @@ Please use 2 Database Views from Exercise #00 and write SQL to get female and ma
 | Language                        | ANSI SQL                                                                                              |
 | SQL Syntax Construction                        | `generate_series(...)`                                                                                              |
 
-Please create a Database View (with name `v_generated_dates`) which should be “store” generated dates from 1st to 31th of January 2022 in DATE type. Don’t forget about order for the generated_date column.  
+Please create a Database View (with name `v_generated_dates`) which should "store" generated dates from January 1st to January 31st, 2022 in type DATE. Don't forget the order of the generated_date column.
 
 | generated_date |
 | ------ |
@@ -177,7 +176,7 @@ Please create a Database View (with name `v_generated_dates`) which should be �
 | Language                        | ANSI SQL                                                                                              |
 
 
-Please write a SQL statement which returns missing days for persons’ visits in January of 2022. Use `v_generated_dates` view for that task and sort the result by missing_date column. The sample of data is presented below.
+Write a SQL statement that returns missing days for people's visits in January 2022. Use the `v_generated_dates` view for this task and sort the result by the missing_date column. The sample data is shown below.
 
 | missing_date |
 | ------ |
@@ -196,10 +195,10 @@ Please write a SQL statement which returns missing days for persons’ visits in
 | **Allowed**                               |                                                                                                                          |
 | Language                        | ANSI SQL                                                                                              |
 
-Please write a SQL statement which satisfies a formula `(R - S)∪(S - R)` .
-Where R is the `person_visits` table with filter by 2nd of January 2022, S is also `person_visits` table but with a different filter by 6th of January 2022. Please make your calculations with sets under the `person_id` column and this column will be alone in a result. The result please sort by `person_id` column and your final SQL please present in `v_symmetric_union` (*) database view.
+Write an SQL statement that satisfies the formula `(R - S)∪(S - R)` .
+Where R is the `person_visits` table with a filter through January 2, 2022, S is also the `person_visits` table but with a different filter through January 6, 2022. Please do your calculations with sets under the `person_id` column and this column will be alone in a result. Please sort the result by the `person_id` column and present your final SQL in the `v_symmetric_union` (*) database view.
 
-(*) to be honest, the definition “symmetric union” doesn’t exist in Set Theory. This is the author's interpretation, the main idea is based on the existing rule of symmetric difference. 
+(*) To be honest, the definition of "symmetric union" doesn't exist in set theory. This is the author's interpretation, the main idea is based on the existing rule of symmetric difference.
 
 
 
@@ -214,7 +213,7 @@ Where R is the `person_visits` table with filter by 2nd of January 2022, S is al
 | **Allowed**                               |                                                                                                                          |
 | Language                        | ANSI SQL                                                                                              |
 
-Please create a Database View `v_price_with_discount` that returns a person's orders with person names, pizza names, real price and calculated column `discount_price` (with applied 10% discount and satisfies formula `price - price*0.1`). The result please sort by person name and pizza name and make a round for `discount_price` column to integer type. Please take a look at a sample result below.
+Please create a Database View `v_price_with_discount` that returns the orders of a person with person name, pizza name, real price and calculated column `discount_price` (with applied 10% discount and satisfying formula `price - price*0.1`). Please sort the result by person names and pizza names and convert the `discount_price` column to integer type. See a sample result below.
 
 
 | name |  pizza_name | price | discount_price |
@@ -237,9 +236,9 @@ Please create a Database View `v_price_with_discount` that returns a person's or
 | **Allowed**                               |                                                                                                                          |
 | Language                        | ANSI SQL                                                                                              |
 
-Please create a Materialized View `mv_dmitriy_visits_and_eats` (with data included) based on SQL statement that finds the name of pizzeria Dmitriy visited on January 8, 2022 and could eat pizzas for less than 800 rubles (this SQL you can find out at Day #02 Exercise #07). 
+Please create a Materialized View `mv_dmitriy_visits_and_eats` (with data included) based on the SQL statement that finds the name of the pizzeria where Dmitriy visited on January 8, 2022 and could eat pizzas for less than 800 rubles (this SQL can be found at Day #02 Exercise #07). 
 
-To check yourself you can write SQL to Materialized View `mv_dmitriy_visits_and_eats` and compare results with your previous query.
+To check yourself, you can write SQL to the Materialized View `mv_dmitriy_visits_and_eats` and compare the results with your previous query.
 
 
 ## Chapter XI
@@ -255,8 +254,8 @@ To check yourself you can write SQL to Materialized View `mv_dmitriy_visits_and_
 | **Denied**                               |                                                                                                                          |
 | SQL Syntax Pattern                        | Don’t use direct numbers for identifiers of Primary Key, person and pizzeria                                                                                               |
 
-Let's refresh data in our Materialized View `mv_dmitriy_visits_and_eats` from exercise #06. Before this action, please generate one more Dmitriy visit that satisfies the SQL clause of Materialized View except pizzeria that we can see in a result from exercise #06.
-After adding a new visit please refresh a state of data for `mv_dmitriy_visits_and_eats`.
+Let's refresh the data in our Materialized View `mv_dmitriy_visits_and_eats` from Exercise #06. Before this action, please create another Dmitriy visit that satisfies the SQL clause of the Materialized View except pizzeria, which we can see in a result from Exercise #06.
+After adding a new visit, please update a data state for `mv_dmitriy_visits_and_eats`.
 
 ## Chapter XII
 ## Exercise 08 - Just clear our database
@@ -269,6 +268,6 @@ After adding a new visit please refresh a state of data for `mv_dmitriy_visits_a
 | **Allowed**                               |                                                                                                                          |
 | Language                        | ANSI SQL                                                                                              |           
 
-After all our exercises were born a few Virtual Tables and one Materialized View. Let’s drop them!
+After all our exercises, we have a couple of Virtual Tables and a Materialized View. Let's drop them!
 
 
