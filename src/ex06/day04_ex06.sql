@@ -1,4 +1,4 @@
-CREATE VIEW mv_dmitriy_visits_and_eats AS
+CREATE MATERIALIZED VIEW mv_dmitriy_visits_and_eats AS
 SELECT pizzeria.name
 FROM menu
 INNER JOIN pizzeria
